@@ -1,0 +1,111 @@
+//hosting Panel Sistemi: C++
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Site {
+private:
+    string ipAddress;
+    int port;
+
+public:
+    string name;
+    float value;
+    string dns;
+
+    // Getter
+    string getIp() {
+        return ipAddress;
+    }
+
+    int getPort() {
+        return port;
+    }
+
+    // Setter
+    void setIp(string ipAddress) {
+        this->ipAddress = ipAddress;
+    }
+
+    void setPort(int port) {
+        this->port = port;
+    }
+
+    // Display site info
+    void display() {
+        cout << "Site Name: " << name
+            << " | Value: " << value
+            << " | DNS: " << dns
+            << " | IP: " << ipAddress
+            << " | Port: " << port << endl;
+    }
+};
+
+// Add site to array
+int addSite(Site sites[], int counter, Site newSite) {
+    sites[counter].name = newSite.name;
+    sites[counter].value = newSite.value;
+    sites[counter].dns = newSite.dns;
+    sites[counter].setIp(newSite.getIp());
+    sites[counter].setPort(newSite.getPort());
+    counter++;
+    return counter;
+}
+
+int main() {
+    int choice;
+    const int MAX = 100;
+    Site sites[MAX];
+    int counter = 0;
+
+    do {
+        cout << "\nHosting Panel" << endl;
+        cout << "1 - Add Site" << endl;
+        cout << "2 - List Sites" << endl;
+        cout << "3 - Exit" << endl;
+        cout << "Your Choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            Site newSite;
+            string ipAddress;
+            int port;
+
+            cout << "Site name: ";
+            cin >> newSite.name;
+
+            cout << "Site value: ";
+            cin >> newSite.value;
+
+            cout << "DNS: ";
+            cin >> newSite.dns;
+
+            cout << "IP address: ";
+            cin >> ipAddress;
+
+            cout << "Port: ";
+            cin >> port;
+
+            newSite.setIp(ipAddress);
+            newSite.setPort(port);
+
+            counter = addSite(sites, counter, newSite);
+        }
+        else if (choice == 2) {
+            for (int i = 0; i < counter; i++) {
+                sites[i].display();
+            }
+        }
+        else if (choice == 3) {
+            cout << "Exiting..." << endl;
+        }
+        else {
+            cout << "Invalid choice. Please enter 1-3." << endl;
+        }
+
+    } while (choice != 3);
+
+    return 0;
+}
